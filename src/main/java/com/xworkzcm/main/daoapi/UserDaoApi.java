@@ -1,7 +1,6 @@
 package com.xworkzcm.main.daoapi;
 
 import com.xworkzcm.main.dto.UpdateDTO;
-import com.xworkzcm.main.entity.UpdateEntity;
 import com.xworkzcm.main.entity.UserEntity;
 import com.xworkzcm.main.utils.Error;
 

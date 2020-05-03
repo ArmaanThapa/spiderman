@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserApi {
 		System.out.println("password    " + randomPassword);
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodePassword = passwordEncoder.encode(randomPassword);
-		boolean b = passwordEncoder.matches(randomPassword, encodePassword);
 
 		userEntity.setPassword(encodePassword);
 
