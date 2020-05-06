@@ -1,5 +1,6 @@
 package com.xworkzcm.main.serviceimpl;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,12 @@ import com.xworkzcm.main.utils.Error;
 
 @Service
 public class UserLoginServiceImpl implements UserLoginApi {
+	
+	private static final Logger  logger=Logger.getLogger(UserLoginServiceImpl.class);
+
 
 	public UserLoginServiceImpl() {
-		System.out.println("Created  " + this.getClass().getSimpleName());
+		logger.info("Created  " + this.getClass().getSimpleName());
 	}
 
 	@Autowired

@@ -1,5 +1,6 @@
 package com.xworkzcm.main.daoimpl;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -16,6 +17,8 @@ import com.xworkzcm.main.utils.Error;
 @Repository
 public class UserLoginImpl implements UserLoginDaoApi {
 
+	private static final Logger logger = Logger.getLogger(UserLoginImpl.class);
+
 	@Autowired
 	SessionFactory factory;
 
@@ -24,7 +27,7 @@ public class UserLoginImpl implements UserLoginDaoApi {
 
 	public Error loginDao(String emailId) {
 
-		System.out.println("inside the dao class" + emailId);
+		logger.info("inside the dao class" + emailId);
 
 		error.setSuccess(true);
 		Session session = null;
@@ -89,9 +92,9 @@ public class UserLoginImpl implements UserLoginDaoApi {
 			UserEntity userEntity = (UserEntity) query.uniqueResult();
 			if (userEntity != null) {
 				System.out.println("attemp password count +  " + userEntity.getNoOfAttemp());
-				
-				boolean checkPwd=passwordEncoder.matches(entity.getPassword(), userEntity.getPassword());
-				System.out.println("passworrrrrrrrrrrrrrrd check using login " + checkPwd);
+
+				boolean checkPwd = passwordEncoder.matches(entity.getPassword(), userEntity.getPassword());
+				logger.info("passworrrrrrrrrrrrrrrd check using login " + checkPwd);
 				if (!(checkPwd)) {
 					int pwdAttemp = userEntity.getNoOfAttemp();
 					pwdAttemp++;
@@ -101,7 +104,7 @@ public class UserLoginImpl implements UserLoginDaoApi {
 					query = session.createQuery(uddateHql);
 					query.setParameter("emailId", emailId);
 					query.setParameter("pwdAttemp", pwdAttemp);
-					int count = query.executeUpdate();
+					query.executeUpdate();
 					error.setSuccess(false);
 					error.setMessage("invalid credentials");
 					return error;
@@ -139,8 +142,8 @@ public class UserLoginImpl implements UserLoginDaoApi {
 				e2.printStackTrace();
 			}
 
-			return error;
 		}
+		return error;
 
 	}
 

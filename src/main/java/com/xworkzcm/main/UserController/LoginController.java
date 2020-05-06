@@ -2,6 +2,7 @@ package com.xworkzcm.main.UserController;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +18,11 @@ import com.xworkzcm.main.utils.Error;
 @Controller
 @RequestMapping("/user")
 public class LoginController {
+	
+	private static final Logger  logger=Logger.getLogger(LoginController.class);
 
 	public LoginController() {
-		System.out.println("Created    " + this.getClass().getSimpleName());
+		logger.info("Created    " + this.getClass().getSimpleName());
 	}
 
 	@Autowired
@@ -32,7 +35,7 @@ public class LoginController {
 
 			return "Login";
 		} else {
-			System.out.println(loginDTO.getEmail() + "and " + loginDTO.getPassword());
+			logger.info(loginDTO.getEmail() + "and " + loginDTO.getPassword());
 			error = userLoginApi.findUserByEmail(loginDTO.getEmail());
 			if (error.isSuccess()) {
 				error = userLoginApi.saveUserLogin(loginDTO);

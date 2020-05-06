@@ -3,6 +3,7 @@ package com.xworkzcm.main.UserController;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +18,13 @@ import com.xworkzcm.main.serviceapi.UserApi;
 @Controller
 @RequestMapping(value = "/user")
 public class UserRegister {
+	
+	
+	private static final Logger logger = Logger.getLogger(UserRegister.class);
+
 
 	public UserRegister() {
-		System.out.println("Created   " + this.getClass().getSimpleName());
+		logger.info("Created   " + this.getClass().getSimpleName());
 	}
 
 	@Autowired

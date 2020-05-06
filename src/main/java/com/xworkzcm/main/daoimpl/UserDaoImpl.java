@@ -1,5 +1,6 @@
 package com.xworkzcm.main.daoimpl;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -14,11 +15,15 @@ import com.xworkzcm.main.utils.Error;
 
 @Repository
 public class UserDaoImpl implements UserDaoApi {
+	
+	
+	private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
+
 
 	Error error = new Error();
 
 	public UserDaoImpl() {
-		System.out.println("created  " + this.getClass().getSimpleName());
+		logger.info("created  " + this.getClass().getSimpleName());
 	}
 
 	@Autowired
@@ -65,7 +70,7 @@ public class UserDaoImpl implements UserDaoApi {
 
 		try {
 
-			System.out.println(user);
+			logger.info(user);
 			String hql = "from UserEntity e where e.userId = :user";
 			Query<UserEntity> query = session.createQuery(hql);
 			query.setParameter("user", user);
@@ -141,7 +146,7 @@ public class UserDaoImpl implements UserDaoApi {
 
 	public Error findUserByEmailID(UpdateDTO updateDTO) {
 		String email=updateDTO.getEmail();
-		System.out.println(updateDTO.toString());
+		logger.info(updateDTO.toString());
 		String ipaddress=updateDTO.getIpAddress();
 		Session session = null;
 		session = factory.openSession();
@@ -151,7 +156,7 @@ public class UserDaoImpl implements UserDaoApi {
 			query.setParameter("email", email);
 			UserEntity entity = (UserEntity) query.uniqueResult();
 			if (entity != null && ipaddress.equals(entity.getIpAddress()) ) {
-				System.out.println("email  ffound");
+				logger.info("email  ffound");
 				error.setSuccess(true);
 				error.setMessage("Email  found");
 				return error;
@@ -172,12 +177,11 @@ public class UserDaoImpl implements UserDaoApi {
 	public Error passwordUpdate(UserEntity userEntity) {
 		String pwd = userEntity.getPassword();
 		String email = userEntity.getEmail();
-		String ipAddress = userEntity.getIpAddress();
-		System.out.println(userEntity.toString());
+		logger.info(userEntity.toString());
 		userEntity.setNoOfAttemp(0);
 		int pwdAttemp = userEntity.getNoOfAttemp();
 
-		System.out.println(userEntity.toString());
+		logger.info(userEntity.toString());
 
 		Session session = null;
 		Transaction transaction = null;
